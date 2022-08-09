@@ -1,0 +1,18 @@
+{
+    "ahadeth": "Ahadeth",
+    "qoran":"qoran",
+    "sebha":"Sebha",
+    "radio":"Radio",
+    "islamic":"Islamic",
+    "surahName":"Surah name",
+    "ahadethName":"Ahadeth name",
+    "numberOfCalls":"Number of calls",
+    "setting":"Settings",
+    "lang":"Language",
+    "darkMood":"Dark Mood",
+    "arabic":"Arabic",
+    "english":"English",
+    "@helloWorld": {
+          "description": "The conventional newborn programmer greeting"
+        }
+}
