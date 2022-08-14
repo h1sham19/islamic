@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:islamic/appFile/AhadethDetails.dart';
-import 'package:islamic/appFile/suraVerses.dart';
+import 'package:islamic/content/hadethContent.dart';
+import 'package:islamic/content/suraContent.dart';
 
-import 'appFile/app.dart';
+import 'app.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -47,7 +47,7 @@ void main() {
       routes: {
         "homeApp": (context) => app(),
         suraVerses.routeName: (context) => suraVerses(),
-        AhdethDetails.routeName: (context) => AhdethDetails(),
+        hadethDetailes.routeName: (context) => hadethDetailes()
       },
       initialRoute: "homeApp",
       home: app()));

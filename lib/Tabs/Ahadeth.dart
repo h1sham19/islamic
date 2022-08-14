@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:islamic/appFile/AhadethDetails.dart';
+import 'package:islamic/content/hadethContent.dart';
+
+import '../model/ahadethcontent.dart';
 
 class ahadeth extends StatefulWidget {
   @override
@@ -9,12 +11,11 @@ class ahadeth extends StatefulWidget {
 }
 
 class _ahadethState extends State<ahadeth> {
-  List<String> ahadethName = [];
-  List<String> hadethContent = [];
+  List<hadeth> hadethcontent = [];
 
   @override
   Widget build(BuildContext context) {
-    if (ahadethName.isEmpty) {
+    if (hadethcontent.isEmpty) {
       readAhadethFile();
     }
     return Stack(
@@ -23,7 +24,7 @@ class _ahadethState extends State<ahadeth> {
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              "assets/images/bg3.png",
+              "assets/images/bgLight.png",
               fit: BoxFit.fill,
             )),
         Container(
@@ -59,22 +60,28 @@ class _ahadethState extends State<ahadeth> {
                 width: MediaQuery.of(context).size.width * 1,
                 child: Container(
                     color: Colors.transparent,
-                    child: ListView.builder(
-                        itemCount: ahadethName.length,
+                    child: ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Divider(
+                                thickness: 1,
+                                color: Theme.of(context).primaryColorLight,
+                              ));
+                        },
+                        itemCount: hadethcontent.length,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, AhdethDetails.routeName,
-                                  arguments: hadethDetailesArg(
-                                      ahadethName[index],
-                                      hadethContent[index]));
+                                  context, hadethDetailes.routeName,
+                                  arguments: hadethcontent[index]);
                             },
                             child: Container(
-                                height: 60,
+                                height: 40,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  ahadethName[index],
+                                  hadethcontent[index].title,
                                   style: Theme.of(context).textTheme.headline3,
                                 )),
                           );
@@ -82,7 +89,7 @@ class _ahadethState extends State<ahadeth> {
               ),
             ],
           ),
-        ),
+        )
       ],
     );
   }
@@ -92,18 +99,13 @@ class _ahadethState extends State<ahadeth> {
         await rootBundle.loadString("assets/files/ahadeth .txt");
     List<String> ahadethh = hadethFile.split("#\r\n");
     for (int i = 0; i < ahadethh.length; i++) {
-      String hadethLines = ahadethh[i];
-      hadethContent = hadethLines.split("\n");
-      ahadethName.add(hadethContent[0]);
-      hadethContent.removeAt(0);
+      String hadethContent = ahadethh[i];
+      List<String> hadethLines = hadethContent.split("\n");
+      String title = hadethLines[0];
+      hadethLines.removeAt(0);
+      hadeth Hadeth = new hadeth(title, hadethLines);
+      hadethcontent.add(Hadeth);
     }
     setState(() {});
   }
-}
-
-class hadethDetailesArg {
-  String hadethName;
-  String detailesHadeth;
-
-  hadethDetailesArg(this.hadethName, this.detailesHadeth);
 }

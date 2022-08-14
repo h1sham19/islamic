@@ -21,7 +21,7 @@ class _SettingState extends State<Setting> {
     return Stack(
       children: [
         Image.asset(
-          "assets/images/bg3.png",
+          "assets/images/bgLight.png",
           height: size.height * 1,
           width: size.width * 1,
           fit: BoxFit.fill,

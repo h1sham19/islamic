@@ -28,7 +28,7 @@ class _sebhaState extends State<sebha> {
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              "assets/images/bg3.png",
+              "assets/images/bgLight.png",
               fit: BoxFit.fill,
             )),
         Container(

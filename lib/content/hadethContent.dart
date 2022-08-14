@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:islamic/model/ahadethcontent.dart';
 
-class suraVerses extends StatefulWidget {
-  static const routeName = "Sura Detailes";
+class hadethDetailes extends StatefulWidget {
+  static const routeName = "hadeth Detailes";
 
   @override
-  State<suraVerses> createState() => _suraVersesState();
+  State<hadethDetailes> createState() => _suraVersesState();
 }
 
-class _suraVersesState extends State<suraVerses> {
-  String suraContant = "";
-  List<String> suraLine = [];
-
+class _suraVersesState extends State<hadethDetailes> {
   @override
   Widget build(BuildContext context) {
-    var args =
-        ModalRoute.of(context)!.settings.arguments as suraDetailsArguments;
+    hadeth args = ModalRoute.of(context)!.settings.arguments as hadeth;
     Size size = MediaQuery.of(context).size;
-    readFile(args.detailesOfSura);
     return Stack(
       children: [
         Image.asset(
-          "assets/images/bg3.png",
+          "assets/images/bgLight.png",
           height: double.infinity,
           width: double.infinity,
           fit: BoxFit.fill,
@@ -31,14 +26,14 @@ class _suraVersesState extends State<suraVerses> {
             centerTitle: true,
             iconTheme: IconThemeData(color: Colors.black),
             title: Text(
-              args.suraName,
+              args.title,
               style: Theme.of(context).textTheme.headline1,
             ),
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
           backgroundColor: Colors.transparent,
-          body: suraLine.isEmpty
+          body: args.content.isEmpty
               ? CircularProgressIndicator()
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,39 +50,18 @@ class _suraVersesState extends State<suraVerses> {
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white,
                         ),
-                        child: ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 60),
-                                  child: Divider(
-                                    thickness: 1,
-                                    color: Theme.of(context).primaryColorLight,
-                                  ));
-                            },
+                        child: ListView.builder(
                             itemBuilder: (context, index) {
                               return Text(
-                                "${suraLine[index]}(${index + 1})",
+                                "${args.content[index]}",
                                 style: Theme.of(context).textTheme.bodyText1,
                               );
                             },
-                            itemCount: suraLine.length)),
+                            itemCount: args.content.length)),
                   ],
                 ),
         ),
       ],
     );
   }
-
-  void readFile(String fileName) async {
-    suraContant = await rootBundle.loadString("assets/files/qoran/$fileName");
-    suraLine = suraContant.split("\n");
-    setState(() {});
-  }
-}
-
-class suraDetailsArguments {
-  String suraName;
-  String detailesOfSura;
-
-  suraDetailsArguments({required this.detailesOfSura, required this.suraName});
 }

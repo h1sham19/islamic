@@ -62,8 +62,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/images/bg3.png
-     - assets/images/Screenshot (1).png
+     - assets/images/bgLight.png
+     - assets/images/ahadethImage.png
      - assets/images/ahadeth.png
      - assets/images/head of seb7a.png
      - assets/images/body of seb7a.png
@@ -71,6 +71,7 @@ flutter:
      - assets/files/ahadeth .txt
      - assets/images/sebha.png
      - assets/images/moshaf_blue.png
+     - assets/images/bgDark.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

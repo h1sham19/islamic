@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Ahadeth.dart';
-import 'QoranPage.dart';
-import 'Radio.dart';
-import 'Sebha.dart';
-import 'Setting.dart';
+import 'Tabs/Ahadeth.dart';
+import 'Tabs/QoranPage.dart';
+import 'Tabs/Radio.dart';
+import 'Tabs/Sebha.dart';
+import 'Tabs/Setting.dart';
 
 class app extends StatefulWidget {
   const app({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class app extends StatefulWidget {
 
 class _appState extends State<app> {
   @override
-  int SelectedIcon = 1;
+  int SelectedIcon = 0;
   List<Widget> Pages = [QoranPage(), ahadeth(), sebha(), radio(), Setting()];
 
   // Obtain shared preferences.
@@ -27,7 +27,7 @@ class _appState extends State<app> {
     return Stack(
       children: [
         Image.asset(
-          "assets/images/bg3.png",
+          "assets/images/bgLight.png",
           height: double.infinity,
           width: double.infinity,
           fit: BoxFit.fill,

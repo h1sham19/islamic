@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:islamic/appFile/suraVerses.dart';
+import 'package:islamic/content/suraContent.dart';
 
 class QoranPage extends StatefulWidget {
   @override
@@ -134,7 +134,7 @@ class _QoranPageState extends State<QoranPage> {
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              "assets/images/bg3.png",
+              "assets/images/bgLight.png",
               fit: BoxFit.fill,
             )),
         Container(
@@ -144,10 +144,10 @@ class _QoranPageState extends State<QoranPage> {
             children: [
               Container(
                 alignment: Alignment.center,
-                child: Image.asset("assets/images/Screenshot (1).png"),
+                child: Image.asset("assets/images/ahadethImage.png"),
               ),
               Divider(
-                thickness: 2,
+                thickness: 3,
                 color: Theme.of(context).primaryColorLight,
               ),
               Container(
@@ -162,7 +162,7 @@ class _QoranPageState extends State<QoranPage> {
                 ),
               ),
               Divider(
-                thickness: 2,
+                thickness: 3,
                 color: Theme.of(context).primaryColorLight,
               ),
               SizedBox(
@@ -170,7 +170,15 @@ class _QoranPageState extends State<QoranPage> {
                 width: MediaQuery.of(context).size.width * 1,
                 child: Container(
                     color: Colors.transparent,
-                    child: ListView.builder(
+                    child: ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Divider(
+                                thickness: 1,
+                                color: Theme.of(context).primaryColorLight,
+                              ));
+                        },
                         itemCount: suraTilte.length - 1,
                         itemBuilder: (context, number) {
                           return GestureDetector(
@@ -181,7 +189,7 @@ class _QoranPageState extends State<QoranPage> {
                                       suraName: suraTilte[number]));
                             },
                             child: Container(
-                                height: 60,
+                                height: 40,
                                 alignment: Alignment.center,
                                 child: Text(
                                   suraTilte[number],
