@@ -67,7 +67,7 @@ class _suraVersesState extends State<suraVerses> {
                             itemBuilder: (context, index) {
                               return Text(
                                 "${suraLine[index]}(${index + 1})",
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyText1,textDirection: TextDirection.rtl,
                               );
                             },
                             itemCount: suraLine.length)),

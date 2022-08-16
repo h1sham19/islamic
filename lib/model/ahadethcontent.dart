@@ -1,5 +1,4 @@
 
-
 class hadeth {
   String title;
   List<String> content;

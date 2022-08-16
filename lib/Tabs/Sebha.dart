@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:islamic/model/Themes.dart';
 class sebha extends StatefulWidget {
   const sebha({Key? key}) : super(key: key);
 
@@ -24,13 +24,6 @@ class _sebhaState extends State<sebha> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.asset(
-              "assets/images/bgLight.png",
-              fit: BoxFit.fill,
-            )),
         Container(
           width: double.infinity,
           color: Colors.transparent,
@@ -68,7 +61,7 @@ class _sebhaState extends State<sebha> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.numberOfCalls,
-                    style: Theme.of(context).textTheme.headline2,
+                    style:themeApp.lightTheme.textTheme.headline2,
                   ),
                 ],
               ),
@@ -79,13 +72,13 @@ class _sebhaState extends State<sebha> {
                 width: 60,
                 height: 70,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorLight,
+                  color: themeApp.primaryColorLight,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   "$number",
-                  style: Theme.of(context).textTheme.headline2,
+                  style: themeApp.lightTheme.textTheme.headline2,
                 ),
               ),
               SizedBox(
@@ -95,12 +88,12 @@ class _sebhaState extends State<sebha> {
                 width: 220,
                 height: 65,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorLight,
+                  color: themeApp.primaryColorLight,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 alignment: Alignment.center,
                 child: Text("${azkar[currentIndex]}",
-                    style: Theme.of(context).textTheme.headline4),
+                    style: themeApp.lightTheme.textTheme.headline3),
               ),
             ],
           ),

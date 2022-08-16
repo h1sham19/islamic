@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:islamic/model/Themes.dart';
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -9,23 +9,16 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  String currentLang = "arabic";
-  late String Selected;
 
-  bool DarkMood = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    String currentLang = AppLocalizations.of(context)!.arabic;
+    String Selected=AppLocalizations.of(context)!.arabic;
+    bool DarkMood = false;
     return Stack(
       children: [
-        Image.asset(
-          "assets/images/bgLight.png",
-          height: size.height * 1,
-          width: size.width * 1,
-          fit: BoxFit.fill,
-        ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: size.width * 0.01),
           padding: EdgeInsets.only(top: 10),
@@ -35,7 +28,7 @@ class _SettingState extends State<Setting> {
                 children: [
                   Container(
                     child: Text(AppLocalizations.of(context)!.lang,
-                        style: Theme.of(context).textTheme.headline2),
+                        style: themeApp.lightTheme.textTheme.headline3),
                   ),
                 ],
               ),
@@ -49,7 +42,7 @@ class _SettingState extends State<Setting> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                     border:
-                        Border.all(color: Theme.of(context).primaryColorLight),
+                        Border.all(color: themeApp.primaryColorLight),
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white),
                 child: InkWell(
@@ -78,9 +71,9 @@ class _SettingState extends State<Setting> {
                                       children: [
                                         Text(
                                           AppLocalizations.of(context)!.english,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline3,
+                                          style: themeApp.lightTheme.textTheme.bodyText1?.copyWith(color:
+                                          Selected==AppLocalizations.of(context)!.english?Colors.blue:Colors.black
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -98,9 +91,9 @@ class _SettingState extends State<Setting> {
                                       children: [
                                         Text(
                                           AppLocalizations.of(context)!.arabic,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline3,
+                                          style: themeApp.lightTheme.textTheme.bodyText1?.copyWith(color:
+                                          Selected==AppLocalizations.of(context)!.arabic?Colors.blue:Colors.black
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -117,7 +110,7 @@ class _SettingState extends State<Setting> {
                     children: [
                       Text(
                         currentLang,
-                        style: Theme.of(context).textTheme.headline3,
+                        style: themeApp.lightTheme.textTheme.headline3,
                       ),
                     ],
                   ),
@@ -132,9 +125,9 @@ class _SettingState extends State<Setting> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(AppLocalizations.of(context)!.darkMood,
-                        style: Theme.of(context).textTheme.headline2),
+                        style: themeApp.lightTheme.textTheme.headline3),
                     Switch(
-                        activeColor: Theme.of(context).primaryColorLight,
+                        activeColor: themeApp.primaryColorLight,
                         activeTrackColor: Colors.black87,
                         value: DarkMood,
                         onChanged: (on) {

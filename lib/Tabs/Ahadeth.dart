@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic/content/hadethContent.dart';
-
 import '../model/ahadethcontent.dart';
-
+import 'package:islamic/model/Themes.dart';
 class ahadeth extends StatefulWidget {
   @override
   State<ahadeth> createState() => _ahadethState();
@@ -21,13 +20,6 @@ class _ahadethState extends State<ahadeth> {
     return Stack(
       children: [
         Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.asset(
-              "assets/images/bgLight.png",
-              fit: BoxFit.fill,
-            )),
-        Container(
           height: MediaQuery.of(context).size.height * 0.80,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +30,6 @@ class _ahadethState extends State<ahadeth> {
               ),
               Divider(
                 thickness: 2,
-                color: Theme.of(context).primaryColorLight,
               ),
               Container(
                 child: Row(
@@ -46,14 +37,13 @@ class _ahadethState extends State<ahadeth> {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.ahadeth,
-                      style: Theme.of(context).textTheme.headline2,
+                      style: themeApp.lightTheme.textTheme.headline2,
                     )
                   ],
                 ),
               ),
               Divider(
                 thickness: 2,
-                color: Theme.of(context).primaryColorLight,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.42,
@@ -66,7 +56,6 @@ class _ahadethState extends State<ahadeth> {
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: Divider(
                                 thickness: 1,
-                                color: Theme.of(context).primaryColorLight,
                               ));
                         },
                         itemCount: hadethcontent.length,
@@ -82,7 +71,7 @@ class _ahadethState extends State<ahadeth> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   hadethcontent[index].title,
-                                  style: Theme.of(context).textTheme.headline3,
+                                  style: themeApp.lightTheme.textTheme.headline3,
                                 )),
                           );
                         })),
@@ -109,3 +98,4 @@ class _ahadethState extends State<ahadeth> {
     setState(() {});
   }
 }
+

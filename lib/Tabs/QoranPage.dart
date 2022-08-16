@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic/content/suraContent.dart';
+import 'package:islamic/model/Themes.dart';
 
 class QoranPage extends StatefulWidget {
   @override
@@ -131,13 +132,6 @@ class _QoranPageState extends State<QoranPage> {
     return Stack(
       children: [
         Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.asset(
-              "assets/images/bgLight.png",
-              fit: BoxFit.fill,
-            )),
-        Container(
           height: MediaQuery.of(context).size.height * 0.80,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +142,6 @@ class _QoranPageState extends State<QoranPage> {
               ),
               Divider(
                 thickness: 3,
-                color: Theme.of(context).primaryColorLight,
               ),
               Container(
                 child: Row(
@@ -156,14 +149,13 @@ class _QoranPageState extends State<QoranPage> {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.surahName,
-                      style: Theme.of(context).textTheme.headline2,
+                      style: themeApp.lightTheme.textTheme.headline2,
                     )
                   ],
                 ),
               ),
               Divider(
                 thickness: 3,
-                color: Theme.of(context).primaryColorLight,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.41,
@@ -176,7 +168,6 @@ class _QoranPageState extends State<QoranPage> {
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: Divider(
                                 thickness: 1,
-                                color: Theme.of(context).primaryColorLight,
                               ));
                         },
                         itemCount: suraTilte.length - 1,
@@ -193,7 +184,7 @@ class _QoranPageState extends State<QoranPage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   suraTilte[number],
-                                  style: Theme.of(context).textTheme.headline3,
+                                  style: themeApp.lightTheme.textTheme.headline3,
                                 )),
                           );
                         })),

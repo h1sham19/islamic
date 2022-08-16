@@ -54,7 +54,7 @@ class _suraVersesState extends State<hadethDetailes> {
                             itemBuilder: (context, index) {
                               return Text(
                                 "${args.content[index]}",
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyText1,textDirection: TextDirection.rtl,
                               );
                             },
                             itemCount: args.content.length)),
@@ -65,3 +65,4 @@ class _suraVersesState extends State<hadethDetailes> {
     );
   }
 }
+
