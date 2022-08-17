@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic/content/suraContent.dart';
 import 'package:islamic/model/Themes.dart';
+import 'package:islamic/model/provider.dart';
+import 'package:provider/provider.dart';
 
 class QoranPage extends StatefulWidget {
   @override
@@ -126,9 +128,9 @@ class _QoranPageState extends State<QoranPage> {
     "الفلق",
     "الناس"
   ];
-
   @override
   Widget build(BuildContext context) {
+    model provider=Provider.of(context);
     return Stack(
       children: [
         Container(
@@ -140,7 +142,7 @@ class _QoranPageState extends State<QoranPage> {
                 alignment: Alignment.center,
                 child: Image.asset("assets/images/ahadethImage.png"),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
               Container(
@@ -149,12 +151,13 @@ class _QoranPageState extends State<QoranPage> {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.surahName,
-                      style: themeApp.lightTheme.textTheme.headline2,
+                      style: provider.isDark()?themeApp.darkTheme.textTheme.headline2
+                      :themeApp.lightTheme.textTheme.headline2,
                     )
                   ],
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
               SizedBox(
@@ -165,8 +168,8 @@ class _QoranPageState extends State<QoranPage> {
                     child: ListView.separated(
                         separatorBuilder: (context, index) {
                           return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Divider(
+                              padding: const EdgeInsets.symmetric(horizontal: 25),
+                              child: const Divider(
                                 thickness: 1,
                               ));
                         },
@@ -184,7 +187,8 @@ class _QoranPageState extends State<QoranPage> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   suraTilte[number],
-                                  style: themeApp.lightTheme.textTheme.headline3,
+                                  style: provider.isDark()?themeApp.darkTheme.textTheme.headline3
+                                      :themeApp.lightTheme.textTheme.headline3,
                                 )),
                           );
                         })),

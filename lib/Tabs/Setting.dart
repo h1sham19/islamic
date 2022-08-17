@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic/model/Themes.dart';
+import 'package:provider/provider.dart';
+
+import '../model/provider.dart';
+
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -9,31 +13,34 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-
+  late String Selected;
+  bool darkMood = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String currentLang = AppLocalizations.of(context)!.arabic;
-    String Selected=AppLocalizations.of(context)!.arabic;
-    bool DarkMood = false;
+    model provider = Provider.of(context);
+    String Selected=provider.currentLang=="ar"?AppLocalizations.of(context)!.arabic
+        :AppLocalizations.of(context)!.english;
+    String selected=provider.currentTheme==ThemeMode.light?AppLocalizations.of(context)!.light
+        :AppLocalizations.of(context)!.dark;
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: size.width * 0.01),
-          padding: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+          padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
               Row(
                 children: [
-                  Container(
-                    child: Text(AppLocalizations.of(context)!.lang,
-                        style: themeApp.lightTheme.textTheme.headline3),
-                  ),
+                  Text(AppLocalizations.of(context)!.lang,
+                      style: provider.isDark()
+                          ? themeApp.darkTheme.textTheme.headline3
+                          : themeApp.lightTheme.textTheme.headline3),
                 ],
               ),
-              SizedBox(
-                height: 5,
+              const SizedBox(
+                height: 10,
               ),
               Container(
                 height: 60,
@@ -41,10 +48,10 @@ class _SettingState extends State<Setting> {
                 margin: EdgeInsets.symmetric(horizontal: size.width * 0.01),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                    border:
-                        Border.all(color: themeApp.primaryColorLight),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white),
+                    border: Border.all(color:  provider.isDark()?themeApp.colorDark:themeApp.primaryColorLight),
+                    color: provider.isDark()
+                        ? themeApp.primaryColorDark
+                        : themeApp.fontDark),
                 child: InkWell(
                   onTap: () {
                     showModalBottomSheet(
@@ -54,7 +61,10 @@ class _SettingState extends State<Setting> {
                             height: size.height * 0.3,
                             width: size.width * 1,
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              color: provider.isDark()
+                                  ? themeApp.primaryColorDark
+                                  : themeApp.fontDark,
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +73,7 @@ class _SettingState extends State<Setting> {
                                     onTap: () {
                                       Selected =
                                           AppLocalizations.of(context)!.english;
-                                      currentLang = Selected;
+                                      provider.changLang("en");
                                       Navigator.pop(context);
                                       setState(() {});
                                     },
@@ -71,9 +81,24 @@ class _SettingState extends State<Setting> {
                                       children: [
                                         Text(
                                           AppLocalizations.of(context)!.english,
-                                          style: themeApp.lightTheme.textTheme.bodyText1?.copyWith(color:
-                                          Selected==AppLocalizations.of(context)!.english?Colors.blue:Colors.black
-                                          ),
+                                          style: provider.isDark()
+                                              ? themeApp
+                                                  .darkTheme.textTheme.bodyText1?.copyWith(
+                                              color: Selected ==
+                                                  AppLocalizations.of(
+                                                      context)!
+                                                      .english
+                                                  ?  provider.isDark()?themeApp.colorDark:themeApp.fontDark
+                                                  : Colors.white)
+                                              : themeApp.lightTheme.textTheme
+                                                  .bodyText1
+                                                  ?.copyWith(
+                                                      color: Selected ==
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .english
+                                                          ?  provider.isDark()?themeApp.colorDark:themeApp.primaryColorLight
+                                                          : Colors.black),
                                         ),
                                       ],
                                     ),
@@ -83,7 +108,7 @@ class _SettingState extends State<Setting> {
                                     onTap: () {
                                       Selected =
                                           AppLocalizations.of(context)!.arabic;
-                                      currentLang = Selected;
+                                      provider.changLang("ar");
                                       Navigator.pop(context);
                                       setState(() {});
                                     },
@@ -91,9 +116,24 @@ class _SettingState extends State<Setting> {
                                       children: [
                                         Text(
                                           AppLocalizations.of(context)!.arabic,
-                                          style: themeApp.lightTheme.textTheme.bodyText1?.copyWith(color:
-                                          Selected==AppLocalizations.of(context)!.arabic?Colors.blue:Colors.black
-                                          ),
+                                          style: provider.isDark()
+                                              ? themeApp
+                                                  .darkTheme.textTheme.bodyText1?.copyWith(
+                                              color: Selected ==
+                                                  AppLocalizations.of(
+                                                      context)!
+                                                      .arabic
+                                                  ?  provider.isDark()?themeApp.colorDark:themeApp.fontDark
+                                                  : Colors.white)
+                                              : themeApp.lightTheme.textTheme
+                                                  .bodyText1
+                                                  ?.copyWith(
+                                                      color: Selected ==
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .arabic
+                                                          ? provider.isDark()?themeApp.colorDark:themeApp.primaryColorLight
+                                                          : Colors.black),
                                         ),
                                       ],
                                     ),
@@ -109,32 +149,143 @@ class _SettingState extends State<Setting> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        currentLang,
-                        style: themeApp.lightTheme.textTheme.headline3,
+                        (provider.currentLang=="ar"?AppLocalizations.of(context)!.arabic
+                            :AppLocalizations.of(context)!.english),
+                        style: provider.isDark()
+                            ? themeApp.darkTheme.textTheme.headline3?.copyWith(color: themeApp.colorDark)
+                            : themeApp.lightTheme.textTheme.headline3?.copyWith(color: themeApp.primaryColorLight),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Text(AppLocalizations.of(context)!.theme,
+                      style: provider.isDark()
+                          ? themeApp.darkTheme.textTheme.headline3
+                          : themeApp.lightTheme.textTheme.headline3),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               Container(
                 height: 60,
                 width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(AppLocalizations.of(context)!.darkMood,
-                        style: themeApp.lightTheme.textTheme.headline3),
-                    Switch(
-                        activeColor: themeApp.primaryColorLight,
-                        activeTrackColor: Colors.black87,
-                        value: DarkMood,
-                        onChanged: (on) {
-                          setState(() {});
-                          DarkMood = on;
-                        })
-                  ],
+                margin: EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(color:  provider.isDark()?themeApp.colorDark:themeApp.primaryColorLight),
+                    color: provider.isDark()
+                        ? themeApp.primaryColorDark
+                        : themeApp.fontDark),
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return SizedBox(
+                            height: size.height * 0.3,
+                            width: size.width * 1,
+                            child: Container(
+                              color: provider.isDark()
+                                  ? themeApp.primaryColorDark
+                                  : themeApp.fontDark,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      selected =
+                                          AppLocalizations.of(context)!.light;
+                                      provider.changTheme(ThemeMode.light);
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!.light,
+                                          style: provider.isDark()
+                                              ? themeApp
+                                              .darkTheme.textTheme.bodyText1?.copyWith(
+                                              color: Selected ==
+                                                  AppLocalizations.of(
+                                                      context)!
+                                                      .english
+                                                  ?  provider.isDark()?themeApp.colorDark:themeApp.fontDark
+                                                  : Colors.white)
+                                              : themeApp.lightTheme.textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                              color: Selected ==
+                                                  AppLocalizations.of(
+                                                      context)!
+                                                      .english
+                                                  ?  provider.isDark()?themeApp.colorDark:themeApp.primaryColorLight
+                                                  : Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  InkWell(
+                                    onTap: () {
+                                      Selected =
+                                          AppLocalizations.of(context)!.dark;
+                                      provider.changTheme(ThemeMode.dark);
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!.dark,
+                                          style: provider.isDark()
+                                              ? themeApp
+                                              .darkTheme.textTheme.bodyText1?.copyWith(
+                                              color: Selected ==
+                                                  AppLocalizations.of(
+                                                      context)!
+                                                      .arabic
+                                                  ?  provider.isDark()?themeApp.colorDark:themeApp.fontDark
+                                                  : Colors.white)
+                                              : themeApp.lightTheme.textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                              color: Selected ==
+                                                  AppLocalizations.of(
+                                                      context)!
+                                                      .arabic
+                                                  ? provider.isDark()?themeApp.colorDark:themeApp.primaryColorLight
+                                                  : Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        (provider.currentTheme==ThemeMode.light?AppLocalizations.of(context)!.light
+                            :AppLocalizations.of(context)!.dark),
+                        style: provider.isDark()
+                            ? themeApp.darkTheme.textTheme.headline3?.copyWith(color: themeApp.colorDark)
+                            : themeApp.lightTheme.textTheme.headline3?.copyWith(color: themeApp.primaryColorLight),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

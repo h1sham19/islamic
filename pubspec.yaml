@@ -43,7 +43,8 @@ flutter:
     - assets/images/sebha.png
     - assets/images/moshaf_blue.png
     - assets/images/bgDark.png
-
+    - assets/images/body of seb7a dark.png
+    - assets/images/head of seb7a dark.png
   # fonts:
   #   - family: Schyler
   #     fonts:

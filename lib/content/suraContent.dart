@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../model/Themes.dart';
+import '../model/provider.dart';
 
 class suraVerses extends StatefulWidget {
   static const routeName = "Sura Detailes";
@@ -14,6 +18,7 @@ class _suraVersesState extends State<suraVerses> {
 
   @override
   Widget build(BuildContext context) {
+    model provider = Provider.of(context);
     var args =
         ModalRoute.of(context)!.settings.arguments as suraDetailsArguments;
     Size size = MediaQuery.of(context).size;
@@ -21,7 +26,7 @@ class _suraVersesState extends State<suraVerses> {
     return Stack(
       children: [
         Image.asset(
-          "assets/images/bgLight.png",
+          provider.isDark()?"assets/images/bgDark.png":"assets/images/bgLight.png",
           height: double.infinity,
           width: double.infinity,
           fit: BoxFit.fill,
@@ -29,10 +34,12 @@ class _suraVersesState extends State<suraVerses> {
         Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: provider.isDark()?Colors.white:Colors.black),
             title: Text(
               args.suraName,
-              style: Theme.of(context).textTheme.headline1,
+              style: provider.isDark()
+                  ? themeApp.darkTheme.textTheme.headline1
+                  : themeApp.lightTheme.textTheme.headline1,
             ),
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -53,7 +60,7 @@ class _suraVersesState extends State<suraVerses> {
                             vertical: size.height * 0.06),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
+                          color:provider.isDark()?themeApp.primaryColorDark:themeApp.fontDark,
                         ),
                         child: ListView.separated(
                             separatorBuilder: (context, index) {
@@ -61,13 +68,16 @@ class _suraVersesState extends State<suraVerses> {
                                   padding: EdgeInsets.symmetric(horizontal: 60),
                                   child: Divider(
                                     thickness: 1,
-                                    color: Theme.of(context).primaryColorLight,
+                                    color:provider.isDark()?Colors.white:themeApp.primaryColorLight,
                                   ));
                             },
                             itemBuilder: (context, index) {
                               return Text(
                                 "${suraLine[index]}(${index + 1})",
-                                style: Theme.of(context).textTheme.bodyText1,textDirection: TextDirection.rtl,
+                                style: provider.isDark()
+                                    ? themeApp.darkTheme.textTheme.bodyText1
+                                    : themeApp.lightTheme.textTheme.bodyText1,
+                                textDirection: TextDirection.rtl,
                               );
                             },
                             itemCount: suraLine.length)),

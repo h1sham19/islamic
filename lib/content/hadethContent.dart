@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:islamic/model/Themes.dart';
 import 'package:islamic/model/ahadethcontent.dart';
+import 'package:provider/provider.dart';
+
+import '../model/provider.dart';
 
 class hadethDetailes extends StatefulWidget {
   static const routeName = "hadeth Detailes";
@@ -13,10 +17,13 @@ class _suraVersesState extends State<hadethDetailes> {
   Widget build(BuildContext context) {
     hadeth args = ModalRoute.of(context)!.settings.arguments as hadeth;
     Size size = MediaQuery.of(context).size;
+    model provider = Provider.of(context);
     return Stack(
       children: [
         Image.asset(
-          "assets/images/bgLight.png",
+          provider.isDark()
+              ? "assets/images/bgDark.png"
+              : "assets/images/bgLight.png",
           height: double.infinity,
           width: double.infinity,
           fit: BoxFit.fill,
@@ -24,10 +31,12 @@ class _suraVersesState extends State<hadethDetailes> {
         Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: provider.isDark()?Colors.white:Colors.black),
             title: Text(
               args.title,
-              style: Theme.of(context).textTheme.headline1,
+              style: provider.isDark()
+                  ? themeApp.darkTheme.textTheme.headline1
+                  : themeApp.lightTheme.textTheme.headline1,
             ),
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -48,13 +57,16 @@ class _suraVersesState extends State<hadethDetailes> {
                             vertical: size.height * 0.06),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
+                          color:provider.isDark()?themeApp.primaryColorDark:themeApp.fontDark,
                         ),
                         child: ListView.builder(
                             itemBuilder: (context, index) {
                               return Text(
                                 "${args.content[index]}",
-                                style: Theme.of(context).textTheme.bodyText1,textDirection: TextDirection.rtl,
+                                style: provider.isDark()
+                                    ? themeApp.darkTheme.textTheme.bodyText1
+                                    : themeApp.lightTheme.textTheme.bodyText1,
+                                textDirection: TextDirection.rtl,
                               );
                             },
                             itemCount: args.content.length)),
@@ -65,4 +77,3 @@ class _suraVersesState extends State<hadethDetailes> {
     );
   }
 }
-

@@ -9,7 +9,9 @@
     "numberOfCalls":"Number of calls",
     "setting":"Settings",
     "lang":"Language",
-    "darkMood":"Dark Mood",
+    "theme":"Theme",
+    "light":"Light",
+    "dark":"Dark",
     "arabic":"Arabic",
     "english":"English",
     "@helloWorld": {
