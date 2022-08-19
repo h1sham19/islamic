@@ -9,7 +9,9 @@
        "numberOfCalls":"عدد التسبيحات",
        "setting":"الأعدادات",
        "lang":"اللغة",
-       "darkMood":"الوض الداكن",
+        "theme":"المظهر",
+        "light":"مضئ",
+        "dark":"ليلي",
        "arabic":"العربية",
        "english":"الإنجليزية"
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic/content/hadethContent.dart';
-
+import 'package:provider/provider.dart';
 import '../model/ahadethcontent.dart';
-
+import 'package:islamic/model/Themes.dart';
+import '../model/provider.dart';
 class ahadeth extends StatefulWidget {
   @override
   State<ahadeth> createState() => _ahadethState();
@@ -15,19 +16,13 @@ class _ahadethState extends State<ahadeth> {
 
   @override
   Widget build(BuildContext context) {
+    model provider=Provider.of(context);
     if (hadethcontent.isEmpty) {
       readAhadethFile();
     }
     return Stack(
       children: [
-        Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.asset(
-              "assets/images/bgLight.png",
-              fit: BoxFit.fill,
-            )),
-        Container(
+        SizedBox(
           height: MediaQuery.of(context).size.height * 0.80,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,24 +31,21 @@ class _ahadethState extends State<ahadeth> {
                 alignment: Alignment.center,
                 child: Image.asset("assets/images/ahadeth.png"),
               ),
-              Divider(
-                thickness: 2,
-                color: Theme.of(context).primaryColorLight,
+              const Divider(
+                thickness: 3,
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.ahadeth,
-                      style: Theme.of(context).textTheme.headline2,
-                    )
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.ahadeth,
+                    style: provider.isDark()?themeApp.darkTheme.textTheme.headline2
+                        :themeApp.lightTheme.textTheme.headline2,
+                  )
+                ],
               ),
-              Divider(
-                thickness: 2,
-                color: Theme.of(context).primaryColorLight,
+              const Divider(
+                thickness: 3,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.42,
@@ -63,10 +55,9 @@ class _ahadethState extends State<ahadeth> {
                     child: ListView.separated(
                         separatorBuilder: (context, index) {
                           return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Divider(
+                              padding: const EdgeInsets.symmetric(horizontal: 25),
+                              child: const Divider(
                                 thickness: 1,
-                                color: Theme.of(context).primaryColorLight,
                               ));
                         },
                         itemCount: hadethcontent.length,
@@ -82,7 +73,8 @@ class _ahadethState extends State<ahadeth> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   hadethcontent[index].title,
-                                  style: Theme.of(context).textTheme.headline3,
+                                  style: provider.isDark()?themeApp.darkTheme.textTheme.headline3
+                                      :themeApp.lightTheme.textTheme.headline3,
                                 )),
                           );
                         })),
@@ -109,3 +101,4 @@ class _ahadethState extends State<ahadeth> {
     setState(() {});
   }
 }
+
